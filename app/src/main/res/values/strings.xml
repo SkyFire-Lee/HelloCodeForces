@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Codeforce</string>
+    <string name="rating">rating</string>
+    <string name="firends">firends</string>
+    <string name="problem">problem</string>
+    <string name="contest">contest</string>
+    <string name="blog">blog</string>
+    <string name="handle">handle</string>
+    <string name="friendOfCount">friendOfCount</string>
+    <string name="avatar">avatar</string>
+    <string name="titlePhoto">titlePhoto</string>
+    <string name="contribution">contribution</string>
+    <string name="rank">rank</string>
+    <string name="maxRank">maxRank</string>
+    <string name="maxRating">maxRating</string>
+    <string name="lastOnlineTimeSeconds">lastOnlineTimeSeconds</string>
+    <string name="registrationTimeSeconds">registrationTimeSeconds</string>
+    <string name="firstName">firstName</string>
+    <string name="lastName">lastName</string>
+    <string name="country">country</string>
+    <string name="city">city</string>
+    <string name="organization">organization</string>
+</resources>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Codeforce</string>
+    <string name="rating">积分</string>
+    <string name="firends">朋友</string>
+    <string name="problem">题目</string>
+    <string name="contest">比赛</string>
+    <string name="blog">博客</string>
+    <string name="handle">用户名</string>
+    <string name="friendOfCount">朋友数</string>
+    <string name="avatar">头像</string>
+    <string name="titlePhoto">照片</string>
+    <string name="contribution">题解数</string>
+    <string name="rank">排位</string>
+    <string name="maxRank">历史最高排位</string>
+    <string name="maxRating">历史最高积分</string>
+    <string name="lastOnlineTimeSeconds">最近上线时间</string>
+    <string name="registrationTimeSeconds">注册时间</string>
+    <string name="firstName">名字</string>
+    <string name="lastName">姓氏</string>
+    <string name="country">国家</string>
+    <string name="city">城市</string>
+    <string name="organization">组织</string>
+</resources>

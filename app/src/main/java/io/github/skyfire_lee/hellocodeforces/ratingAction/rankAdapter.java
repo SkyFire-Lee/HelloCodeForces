@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class rankAdapter extends BaseAdapter {
             holder.oldRating = (TextView) view.findViewById(R.id.tv_oldRating);
             holder.newRating = (TextView) view.findViewById(R.id.tv_newRating);
             holder.Rank = (TextView) view.findViewById(R.id.tv_Rank);
+            holder.body = (LinearLayout) view.findViewById(R.id.ly_body);
             view.setTag(holder);
         }
         else
@@ -66,6 +68,15 @@ public class rankAdapter extends BaseAdapter {
         holder.newRating.setText(bean.getNewRating());
         holder.contestName.setText(bean.getContestName());
         holder.oldRating.setText(bean.getOldRating());
+
+        if(Integer.parseInt(bean.getOldRating()) > Integer.parseInt(bean.getNewRating()))
+        {
+            holder.body.setBackgroundResource(R.color.ratingDown);
+        }
+        else
+        {
+            holder.body.setBackgroundResource(R.color.ratingUp);
+        }
         return view;
     }
 
@@ -74,5 +85,6 @@ public class rankAdapter extends BaseAdapter {
         public TextView oldRating;
         public TextView newRating;
         public TextView Rank;
+        public LinearLayout body;
     }
 }

@@ -1,5 +1,6 @@
 package io.github.skyfire_lee.hellocodeforces;
 
+import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ListView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +27,10 @@ import io.github.skyfire_lee.hellocodeforces.ratingAction.rankAdapter;
  * Created by SkyFire on 2016/5/20.
  */
 public class RatingActivity extends AppCompatActivity{
-    private WebView wv_echarts;
     private ListView lv_contest;
     private Handler handler;
     private String mhandler;
+    private LineChart lc_charts;
     private List<rankBean> list = new ArrayList<>();
 
     private rankAdapter RankAdapter;
@@ -34,8 +38,8 @@ public class RatingActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
-        wv_echarts = (WebView) findViewById(R.id.wv_echarts);
         lv_contest = (ListView) findViewById(R.id.lv_contest);
+        lc_charts = (LineChart) findViewById(R.id.lc_charts);
 
         RankAdapter = new rankAdapter(this, list);
         handler = new Handler();
@@ -51,6 +55,6 @@ public class RatingActivity extends AppCompatActivity{
     protected void onStart() {
         super.onStart();
 
-        (new InitRatingThread(list, handler, RankAdapter, mhandler)).start();
+        (new InitRatingThread(list, handler, RankAdapter, mhandler, lc_charts)).start();
     }
 }

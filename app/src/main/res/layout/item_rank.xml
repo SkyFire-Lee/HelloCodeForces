@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:baselineAligned="false">
+    android:layout_height="80dp"
+    android:baselineAligned="false"
+    android:id="@+id/ly_body">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="50dp">
         <TextView
             android:id="@+id/tv_contestName"
-            android:text="Codeforces Round #317 [AimFund Thanks-Round] (Div. 2)"
-            android:padding="5dp"
+            android:text="Codeforces Round #317"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|left"
             android:textStyle="bold"
-            android:layout_weight="6"/>
+            android:layout_weight="6" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,27 +24,26 @@
         <TextView
             android:id="@+id/tv_Rank"
             android:text="1682"
-            android:paddingLeft="5dp"
+            android:paddingLeft="10dp"
             android:gravity="center_vertical|left"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_weight="4"/>
         <TextView
             android:id="@+id/tv_oldRating"
             android:text="1439"
             android:paddingLeft="5dp"
-            android:gravity="center"
+            android:gravity="center_vertical|left"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tv_newRating"
             android:text="1378"
-            android:gravity="center"
+            android:gravity="center_vertical|left"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:layout_weight="1"/>
-
     </LinearLayout>
 
 </LinearLayout>

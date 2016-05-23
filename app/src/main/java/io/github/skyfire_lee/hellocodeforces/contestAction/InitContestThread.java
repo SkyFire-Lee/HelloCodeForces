@@ -1,6 +1,7 @@
 package io.github.skyfire_lee.hellocodeforces.contestAction;
 
 import android.os.Handler;
+import android.os.SystemClock;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +55,8 @@ public class InitContestThread extends Thread{
                             ContestBean.setStartTimeSeconds(jsonArray.getJSONObject(i).getString("startTimeSeconds"));
 
                             ContestBean.setPhase(jsonArray.getJSONObject(i).getString("phase"));
+
+                            System.out.println(jsonArray.getJSONObject(i).getString("phase"));
 
                             list.add(ContestBean);
                         }

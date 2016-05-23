@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import io.github.skyfire_lee.hellocodeforces.R;
@@ -53,6 +56,7 @@ public class contestAdapter extends BaseAdapter{
             holder.startTimeSeconds = (TextView) view.findViewById(R.id.tv_startTimeSeconds);
             holder.Phase = (TextView) view.findViewById(R.id.tv_Phase);
             holder.durationSeconds = (TextView) view.findViewById(R.id.tv_durationSeconds);
+            holder.body = (LinearLayout) view.findViewById(R.id.ly_body);
             view.setTag(holder);
         }
         else
@@ -66,6 +70,15 @@ public class contestAdapter extends BaseAdapter{
         holder.startTimeSeconds.setText(bean.getStartTimeSeconds());
         holder.Phase.setText(bean.getPhase());
         holder.durationSeconds.setText(bean.getDurationSeconds());
+
+        if(bean.getPhase().equals("BEFORE"))
+        {
+            holder.body.setBackgroundResource(R.color.contestRun);
+        }
+        else
+        {
+            holder.body.setBackgroundResource(R.color.contestFin);
+        }
         return view;
     }
 
@@ -74,5 +87,6 @@ public class contestAdapter extends BaseAdapter{
         public TextView startTimeSeconds;
         public TextView Phase;
         public TextView durationSeconds;
+        public LinearLayout body;
     }
 }

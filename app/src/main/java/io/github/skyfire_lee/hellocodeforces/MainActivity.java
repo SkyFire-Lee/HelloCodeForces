@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+
 import io.github.skyfire_lee.hellocodeforces.bean.userInfoBean;
 
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_rating;
     private TextView tv_s_contest;
     private TextView tv_s_blog;
+    private LineChart lc_charts;
     private Handler handler;
     private String mhandler;
 
@@ -27,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         //绑定界面控件
         handler = new Handler();
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         tv_rating = (TextView) findViewById(R.id.tv_s_rating);
         tv_s_contest = (TextView) findViewById(R.id.tv_s_contest);
         tv_s_blog = (TextView) findViewById(R.id.tv_s_blog);
+
 
         //进入用户界面按钮点击事件
         id_avatar.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     protected void onStart() {

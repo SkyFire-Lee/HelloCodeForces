@@ -2,12 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <WebView
-        android:id="@+id/wv_echarts"
+    <com.github.mikephil.charting.charts.LineChart
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layerType="software">
-    </WebView>
+        android:layout_height="200dp" android:id="@+id/lc_charts">
+
+    </com.github.mikephil.charting.charts.LineChart>
     <ListView
         android:id="@+id/lv_contest"
         android:layout_width="match_parent"

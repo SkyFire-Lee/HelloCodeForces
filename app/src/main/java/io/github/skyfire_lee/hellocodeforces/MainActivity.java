@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         tv_s_blog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, BlogActivity.class));
+                startActivity(new Intent(MainActivity.this, ActionsActivity.class));
             }
         });
     }

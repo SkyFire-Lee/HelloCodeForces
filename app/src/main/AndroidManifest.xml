@@ -17,6 +17,7 @@
         <activity android:name=".UserActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".RatingActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".ContestActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".ActionsActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".BlogActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>

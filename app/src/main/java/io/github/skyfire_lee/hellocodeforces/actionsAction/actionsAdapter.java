@@ -1,4 +1,4 @@
-package io.github.skyfire_lee.hellocodeforces.blogAction;
+package io.github.skyfire_lee.hellocodeforces.actionsAction;
 
 import android.content.Context;
 import android.text.Html;
@@ -16,12 +16,12 @@ import io.github.skyfire_lee.hellocodeforces.bean.blogBean;
 /**
  * Created by SkyFire on 2016/5/21.
  */
-public class blogAdapter extends BaseAdapter {
+public class actionsAdapter extends BaseAdapter {
     private List<blogBean> list;
 
     private LayoutInflater mLayoutInflater;
 
-    public blogAdapter(Context context, List<blogBean> list) {
+    public actionsAdapter(Context context, List<blogBean> list) {
         this.list = list;
         this.mLayoutInflater = LayoutInflater.from(context);
     }

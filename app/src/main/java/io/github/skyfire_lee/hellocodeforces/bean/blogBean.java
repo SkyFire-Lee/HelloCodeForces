@@ -8,6 +8,17 @@ public class blogBean {
     private String author;
     private String creationTimeSeconds;
 
+    public String getBlogEntryId() {
+        return blogEntryId;
+    }
+
+    public blogBean setBlogEntryId(String blogEntryId) {
+        this.blogEntryId = blogEntryId;
+        return this;
+    }
+
+    private String blogEntryId;
+
     public String getTitle() {
         return title;
     }

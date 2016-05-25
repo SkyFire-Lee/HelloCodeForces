@@ -4,39 +4,36 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.LogRecord;
 
-import io.github.skyfire_lee.hellocodeforces.bean.blogBean;
 import io.github.skyfire_lee.hellocodeforces.blogAction.InitBlogThread;
-import io.github.skyfire_lee.hellocodeforces.blogAction.blogAdapter;
 
 /**
- * Created by SkyFire on 2016/5/21.
+ * Created by SkyFire on 2016/5/25.
  */
 public class BlogActivity extends AppCompatActivity {
-    private ListView lv_blog_list;
-    private List<blogBean> list = new ArrayList<>();;
-    private blogAdapter BlogAdapter;
-    private Handler handler;
+
+    private String blogEntryId;
+
+    private Handler handler = new Handler();
+
+    private TextView tv_title;
+    private TextView tv_content;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog);
 
-        lv_blog_list  = (ListView) findViewById(R.id.lv_blog_list);
-        handler = new Handler();
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_content = (TextView) findViewById(R.id.tv_content);
 
-        BlogAdapter = new blogAdapter(this, list);
+        Bundle bundle = getIntent().getExtras();
 
-        lv_blog_list.setAdapter(BlogAdapter);
+        blogEntryId = bundle.getCharSequence("blogEntryId").toString();
 
-        (new InitBlogThread(list, handler, BlogAdapter)).start();
+        (new InitBlogThread(blogEntryId, handler, tv_title, tv_content)).start();
     }
 }

@@ -20,4 +20,5 @@
     <string name="country">国家</string>
     <string name="city">城市</string>
     <string name="organization">组织</string>
+    <string name="title">标题</string>
 </resources>

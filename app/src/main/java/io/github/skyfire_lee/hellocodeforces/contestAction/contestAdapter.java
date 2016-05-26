@@ -54,7 +54,6 @@ public class contestAdapter extends BaseAdapter{
             view = mLayoutInflater.inflate(R.layout.item_contest, null);
             holder.contestName = (TextView) view.findViewById(R.id.tv_contestName);
             holder.startTimeSeconds = (TextView) view.findViewById(R.id.tv_startTimeSeconds);
-            holder.Phase = (TextView) view.findViewById(R.id.tv_Phase);
             holder.durationSeconds = (TextView) view.findViewById(R.id.tv_durationSeconds);
             holder.body = (LinearLayout) view.findViewById(R.id.ly_body);
             view.setTag(holder);
@@ -68,7 +67,6 @@ public class contestAdapter extends BaseAdapter{
 
         holder.contestName.setText(bean.getName());
         holder.startTimeSeconds.setText(bean.getStartTimeSeconds());
-        holder.Phase.setText(bean.getPhase());
         holder.durationSeconds.setText(bean.getDurationSeconds());
 
         if(bean.getPhase().equals("BEFORE"))
@@ -85,7 +83,6 @@ public class contestAdapter extends BaseAdapter{
     class MyViewHolder{
         public TextView contestName;
         public TextView startTimeSeconds;
-        public TextView Phase;
         public TextView durationSeconds;
         public LinearLayout body;
     }

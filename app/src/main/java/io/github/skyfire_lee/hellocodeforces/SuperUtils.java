@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.github.skyfire_lee.hellocodeforces.bean.userInfoBean;
 
@@ -21,6 +24,7 @@ import io.github.skyfire_lee.hellocodeforces.bean.userInfoBean;
  * Created by SkyFire on 2016/5/19.
  */
 public class SuperUtils {
+
     public static String getChinese(String str, Context context) {
         if (str.equals("handle")) return context.getString(R.string.handle);
         if (str.equals("friendOfCount")) return context.getString(R.string.friendOfCount);
@@ -116,5 +120,20 @@ public class SuperUtils {
         }
 
         return null;
+    }
+
+    public static String getHtmlCss(String data)
+    {
+        data = "<html><head><link rel=\"stylesheet\" href=\"http://st.codeforces.com/s/56354/css/ttypography.css\" type=\"text/css\" charset=\"utf-8\"><style>* {font-size:16px;line-height:20px;} p {color:#333;font-size:0.75em !important;}</style>" + data;
+        data = data + "</head><body></body></html>";
+        return data;
+    }
+
+    private static SimpleDateFormat sf = null;
+
+    public static String getDateToString(long time) {
+        Date d = new Date(time*1000);
+        sf = new SimpleDateFormat("yyyy-MM-dd");
+        return sf.format(d);
     }
 }

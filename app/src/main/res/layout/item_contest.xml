@@ -29,18 +29,12 @@
             android:gravity="center_vertical|left"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_weight="4"/>
-        <TextView
-            android:id="@+id/tv_Phase"
-            android:text="BEFORE"
-            android:gravity="center_vertical|left"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_weight="1"/>
+            android:layout_weight="5"/>
         <TextView
             android:id="@+id/tv_durationSeconds"
             android:text="7200"
-            android:gravity="center_vertical|left"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical|right"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"/>

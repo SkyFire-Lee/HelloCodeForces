@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import io.github.skyfire_lee.hellocodeforces.SuperUtils;
 import io.github.skyfire_lee.hellocodeforces.bean.rankBean;
 
 /**
@@ -57,7 +58,7 @@ public class InitRatingThread extends Thread {
 
                         for (int i = len - 1; i >= 0; i--)
                         {
-                            list.add(new rankBean((jsonArray.getJSONObject(i).getString("contestName")),(jsonArray.getJSONObject(i).getString("oldRating")),(jsonArray.getJSONObject(i).getString("newRating")),(jsonArray.getJSONObject(i).getString("rank"))));
+                            list.add(new rankBean((jsonArray.getJSONObject(i).getString("contestName")),(jsonArray.getJSONObject(i).getString("oldRating")), (jsonArray.getJSONObject(i).getString("newRating")),(jsonArray.getJSONObject(i).getString("rank"))));
                         }
 
                         RankAdapter.notifyDataSetChanged();

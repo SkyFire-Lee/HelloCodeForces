@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.List;
 
+import io.github.skyfire_lee.hellocodeforces.SuperUtils;
 import io.github.skyfire_lee.hellocodeforces.bean.contestBean;
 import io.github.skyfire_lee.hellocodeforces.bean.rankBean;
 import io.github.skyfire_lee.hellocodeforces.ratingAction.rankAdapter;
@@ -52,11 +53,9 @@ public class InitContestThread extends Thread{
 
                             ContestBean.setName(jsonArray.getJSONObject(i).getString("name")).setDurationSeconds(jsonArray.getJSONObject(i).getString("durationSeconds"));
 
-                            ContestBean.setStartTimeSeconds(jsonArray.getJSONObject(i).getString("startTimeSeconds"));
+                            ContestBean.setStartTimeSeconds(SuperUtils.getDateToString(Long.parseLong(jsonArray.getJSONObject(i).getString("startTimeSeconds"))));
 
                             ContestBean.setPhase(jsonArray.getJSONObject(i).getString("phase"));
-
-                            System.out.println(jsonArray.getJSONObject(i).getString("phase"));
 
                             list.add(ContestBean);
                         }

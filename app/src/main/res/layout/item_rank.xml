@@ -28,19 +28,12 @@
             android:gravity="center_vertical|left"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_weight="4"/>
-        <TextView
-            android:id="@+id/tv_oldRating"
-            android:text="1439"
-            android:paddingLeft="5dp"
-            android:gravity="center_vertical|left"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_weight="1"/>
+            android:layout_weight="5"/>
         <TextView
             android:id="@+id/tv_newRating"
             android:text="1378"
-            android:gravity="center_vertical|left"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical|right"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"/>

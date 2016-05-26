@@ -7,4 +7,6 @@
     <color name="ratingUp">#DDF0ED</color>
     <color name="contestRun">#EEEEFF</color>
     <color name="contestFin">#F5FFFB</color>
+    <color name="ratingUpText">#AB2418</color>
+    <color name="ratingDownText">#AB5EA2</color>
 </resources>

@@ -10,6 +10,7 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.List;
 
+import io.github.skyfire_lee.hellocodeforces.SuperUtils;
 import io.github.skyfire_lee.hellocodeforces.bean.blogBean;
 
 /**
@@ -53,7 +54,7 @@ public class InitActionsThread extends Thread {
 
                             BlogBean.setAuthor(jsonObject.getString("authorHandle"));
 
-                            BlogBean.setCreationTimeSeconds(jsonObject.getString("creationTimeSeconds"));
+                            BlogBean.setCreationTimeSeconds(SuperUtils.getDateToString(Long.parseLong(jsonObject.getString("creationTimeSeconds"))));
 
                             BlogBean.setTitle(jsonObject.getString("title"));
 

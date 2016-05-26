@@ -1,6 +1,7 @@
 package io.github.skyfire_lee.hellocodeforces.ratingAction;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,6 @@ public class rankAdapter extends BaseAdapter {
             holder = new MyViewHolder();
             view = mLayoutInflater.inflate(R.layout.item_rank, null);
             holder.contestName = (TextView) view.findViewById(R.id.tv_contestName);
-            holder.oldRating = (TextView) view.findViewById(R.id.tv_oldRating);
             holder.newRating = (TextView) view.findViewById(R.id.tv_newRating);
             holder.Rank = (TextView) view.findViewById(R.id.tv_Rank);
             holder.body = (LinearLayout) view.findViewById(R.id.ly_body);
@@ -67,22 +67,22 @@ public class rankAdapter extends BaseAdapter {
         holder.Rank.setText(bean.getRank());
         holder.newRating.setText(bean.getNewRating());
         holder.contestName.setText(bean.getContestName());
-        holder.oldRating.setText(bean.getOldRating());
 
         if(Integer.parseInt(bean.getOldRating()) > Integer.parseInt(bean.getNewRating()))
         {
             holder.body.setBackgroundResource(R.color.ratingDown);
+            holder.newRating.setTextColor(Color.parseColor("#AB2418"));
         }
         else
         {
             holder.body.setBackgroundResource(R.color.ratingUp);
+            holder.newRating.setTextColor(Color.parseColor("#AB5EA2"));
         }
         return view;
     }
 
     class MyViewHolder{
         public TextView contestName;
-        public TextView oldRating;
         public TextView newRating;
         public TextView Rank;
         public LinearLayout body;

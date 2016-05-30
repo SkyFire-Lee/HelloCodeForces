@@ -17,27 +17,23 @@ import io.github.skyfire_lee.hellocodeforces.contestAction.contestAdapter;
  * Created by SkyFire on 2016/5/21.
  */
 public class ContestActivity extends AppCompatActivity{
-    private ListView lv_contest;
 
-    private List<contestBean> list = new ArrayList<>();
-
-    private contestAdapter ContestAdapter;
-
-    private Handler handler;
+    public ListView lv_contest;
+    public List<contestBean> list = new ArrayList<>();
+    public contestAdapter ContestAdapter;
+    public Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contest);
         lv_contest = (ListView) findViewById(R.id.lv_contest);
 
+        ContestAdapter = new contestAdapter(this, list);
+        lv_contest.setAdapter(ContestAdapter);
         handler = new Handler();
 
-        ContestAdapter = new contestAdapter(this, list);
-
-        lv_contest.setAdapter(ContestAdapter);
-
-        (new InitContestThread(list, handler, ContestAdapter)).start();
-
+        (new InitContestThread(this)).start();
     }
 }

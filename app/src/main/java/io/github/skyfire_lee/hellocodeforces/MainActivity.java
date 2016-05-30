@@ -2,7 +2,6 @@ package io.github.skyfire_lee.hellocodeforces;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,21 +9,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
-
-import io.github.skyfire_lee.hellocodeforces.bean.userInfoBean;
+import io.github.skyfire_lee.hellocodeforces.mainAction.InitMainThread;
 
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView id_avatar;
-    private TextView id_name;
-    private TextView id_rating;
-    private TextView tv_rating;
-    private TextView tv_s_contest;
-    private TextView tv_s_blog;
-    private LineChart lc_charts;
-    private Handler handler;
-    private String mhandler;
+
+    public ImageView id_avatar;
+    public TextView id_name;
+    public TextView id_rating;
+    public TextView tv_rating;
+    public TextView tv_s_contest;
+    public TextView tv_s_blog;
+
+    public Handler handler;
+    public String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putCharSequence("handler", mhandler);
+                bundle.putCharSequence("handler", nickname);
                 Intent intent = new Intent(MainActivity.this, UserActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);       //点击进入详细页面
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putCharSequence("handler", mhandler);
+                bundle.putCharSequence("handler", nickname);
                 Intent intent = new Intent(MainActivity.this, RatingActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);       //点击进入详细页面
@@ -83,36 +81,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         //读取数据
-        SharedPreferences pref = getSharedPreferences("cfPref", MODE_PRIVATE);
-        String xhandler = pref.getString("handler", "tourist");
+        SharedPreferences pref = getSharedPreferences("CodeForcePref", MODE_PRIVATE);
+        String _handler = pref.getString("handler", "tourist");
 
-        if(mhandler == null || xhandler.equals(mhandler) == false)
+        if(nickname == null || _handler.equals(nickname) == false)
         {
-            mhandler = xhandler;
-            //更新界面数据线程
-            (new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    final Bitmap bitmap = SuperUtils.getAvatarImage(mhandler);
-
-                    final userInfoBean userInfo = SuperUtils.getUserInfo(mhandler);
-
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            id_avatar.setImageBitmap(bitmap);
-                            id_name.setText(mhandler);
-                            id_rating.setText(userInfo.getRating());
-                        }
-                    });
-                }
-            })).start();
+            (new InitMainThread(this)).start();
         }
-
     }
-
-
 }

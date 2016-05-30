@@ -4,12 +4,15 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.ListView;
 
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,7 +50,14 @@ public class InitUserThread extends Thread {
         final JSONObject jsonObject;
 
         try {
-            String doc = Jsoup.connect("http://codeforces.com/api/user.info?handles=" + mhandler).ignoreContentType(true).execute().body();
+            String doc = "";
+            try {
+                doc = Jsoup.connect("http://codeforces.com/api/user.info?handles=" + mhandler).ignoreContentType(true).execute().body();
+            }catch (SocketTimeoutException e)
+            {
+                doc = "";
+            }
+
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 

@@ -10,6 +10,7 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.List;
 
+import io.github.skyfire_lee.hellocodeforces.ActionsActivity;
 import io.github.skyfire_lee.hellocodeforces.SuperUtils;
 import io.github.skyfire_lee.hellocodeforces.bean.blogBean;
 
@@ -17,14 +18,11 @@ import io.github.skyfire_lee.hellocodeforces.bean.blogBean;
  * Created by SkyFire on 2016/5/21.
  */
 public class InitActionsThread extends Thread {
-    private List<blogBean> list;
-    private Handler handler;
-    private actionsAdapter actionsAdapter;
 
-    public InitActionsThread(List<blogBean> list, Handler handler, actionsAdapter actionsAdapter) {
-        this.list = list;
-        this.handler = handler;
-        this.actionsAdapter = actionsAdapter;
+    private ActionsActivity context;
+
+    public InitActionsThread(ActionsActivity context) {
+        this.context = context;
     }
 
     @Override
@@ -38,7 +36,7 @@ public class InitActionsThread extends Thread {
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
 
-            handler.post(new Runnable() {
+            context.handler.post(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -48,7 +46,6 @@ public class InitActionsThread extends Thread {
                         for (int i = 0; i < len ;i++)
                         {
                             JSONObject jsonObject = jsonArray.getJSONObject(i).getJSONObject("blogEntry");
-                            System.out.println(jsonObject.getString("creationTimeSeconds"));
 
                             blogBean BlogBean = new blogBean();
 
@@ -60,10 +57,10 @@ public class InitActionsThread extends Thread {
 
                             BlogBean.setBlogEntryId(jsonObject.getString("id"));
 
-                            list.add(BlogBean);
+                            context.list.add(BlogBean);
                         }
 
-                        actionsAdapter.notifyDataSetChanged();
+                        context.actionsAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

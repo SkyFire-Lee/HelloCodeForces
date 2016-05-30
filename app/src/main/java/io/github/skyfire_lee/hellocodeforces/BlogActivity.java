@@ -18,15 +18,14 @@ import io.github.skyfire_lee.hellocodeforces.blogAction.InitBlogThread;
  */
 public class BlogActivity extends AppCompatActivity {
 
-    private String blogEntryId;
-
-    private Handler handler = new Handler();
-
-    private TextView tv_title;
-    private WebView wv_content;
+    public String blogEntryId;
+    public TextView tv_title;
+    public WebView wv_content;
+    public Handler handler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog);
 
@@ -37,8 +36,6 @@ public class BlogActivity extends AppCompatActivity {
 
         blogEntryId = bundle.getCharSequence("blogEntryId").toString();
 
-        (new InitBlogThread(blogEntryId, handler, tv_title, wv_content)).start();
-
-
+        (new InitBlogThread(this)).start();
     }
 }

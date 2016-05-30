@@ -20,10 +20,11 @@ import io.github.skyfire_lee.hellocodeforces.actionsAction.actionsAdapter;
  * Created by SkyFire on 2016/5/21.
  */
 public class ActionsActivity extends AppCompatActivity {
-    private ListView lv_blog_list;
-    private List<blogBean> list = new ArrayList<>();;
-    private actionsAdapter actionsAdapter;
-    private Handler handler;
+
+    public ListView lv_blog_list;
+    public List<blogBean> list = new ArrayList<>();;
+    public actionsAdapter actionsAdapter;
+    public Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,17 +32,18 @@ public class ActionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_actions);
 
         lv_blog_list  = (ListView) findViewById(R.id.lv_blog_list);
-        handler = new Handler();
+
 
         actionsAdapter = new actionsAdapter(this, list);
-
         lv_blog_list.setAdapter(actionsAdapter);
+        handler = new Handler();
 
-        (new InitActionsThread(list, handler, actionsAdapter)).start();
+        (new InitActionsThread(this)).start();
 
         lv_blog_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Bundle bundle = new Bundle();
 
                 bundle.putCharSequence("blogEntryId", list.get(position).getBlogEntryId());

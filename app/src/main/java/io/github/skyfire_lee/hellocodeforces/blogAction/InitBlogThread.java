@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import io.github.skyfire_lee.hellocodeforces.BlogActivity;
 import io.github.skyfire_lee.hellocodeforces.SuperUtils;
 import io.github.skyfire_lee.hellocodeforces.bean.contestBean;
 
@@ -23,16 +24,10 @@ import io.github.skyfire_lee.hellocodeforces.bean.contestBean;
  */
 public class InitBlogThread extends Thread {
 
-    private String blogEntryId;
-    private  Handler handler;
-    private TextView tv_title;
-    private WebView wv_content;
+    private BlogActivity context;
 
-    public InitBlogThread(String blogEntryId, Handler handler, TextView tv_title, WebView wv_content) {
-        this.blogEntryId = blogEntryId;
-        this.handler = handler;
-        this.tv_title = tv_title;
-        this.wv_content = wv_content;
+    public InitBlogThread(BlogActivity context) {
+        this.context = context;
     }
 
     @Override
@@ -41,25 +36,23 @@ public class InitBlogThread extends Thread {
         final JSONObject jsonObject;
 
         try {
-            String doc = Jsoup.connect("http://www.codeforces.com/api/blogEntry.view?blogEntryId=" + blogEntryId).ignoreContentType(true).execute().body();
+            String doc = Jsoup.connect("http://www.codeforces.com/api/blogEntry.view?blogEntryId=" + context.blogEntryId).ignoreContentType(true).execute().body();
 
             jsonObject = new JSONObject(doc).getJSONObject("result");
 
-            handler.post(new Runnable() {
+            context.handler.post(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        tv_title.setText(Html.fromHtml(jsonObject.getString("title")));
+                        context.tv_title.setText(Html.fromHtml(jsonObject.getString("title")));
 
-                        wv_content.loadDataWithBaseURL("", SuperUtils.getHtmlCss(jsonObject.getString("content")), "text/html",  "utf-8","");
+                        context.wv_content.loadDataWithBaseURL("", SuperUtils.getHtmlCss(jsonObject.getString("content")), "text/html",  "utf-8","");
 
-      //                  wv_content.loadData(URLEncoder.encode(jsonObject.getString("content"),"UTF-8"), "text/html",  "utf-8");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

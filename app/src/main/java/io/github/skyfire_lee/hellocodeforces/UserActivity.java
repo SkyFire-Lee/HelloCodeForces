@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,27 +32,27 @@ public class UserActivity extends AppCompatActivity {
     private InfoAdapter accountAdapter;
     private InfoAdapter infoAdapter;
 
-    private String mhandler;
-    private String xhandler;
+    private String nickname;
+    private String _handler;
     private Handler handler;
 
     private EditText editText;
 
     private void updateData()
     {
-        if(xhandler != null && xhandler.equals(mhandler) == false)
+        if(_handler != null && _handler.equals(nickname) == false)
         {
-            mhandler = xhandler;
+            nickname = _handler;
             account.clear();
             info.clear();
-            (new InitUserThread(account, info, handler,accountAdapter,infoAdapter, mhandler, this)).start();
+            (new InitUserThread(account, info, handler,accountAdapter,infoAdapter, nickname, this)).start();
         }
-        else if(xhandler == null)
+        else if(_handler == null)
         {
             account.clear();
             info.clear();
-            (new InitUserThread(account, info, handler,accountAdapter,infoAdapter, mhandler, this)).start();
-            xhandler = mhandler;
+            (new InitUserThread(account, info, handler,accountAdapter,infoAdapter, nickname, this)).start();
+            _handler = nickname;
         }
     }
 
@@ -75,7 +74,7 @@ public class UserActivity extends AppCompatActivity {
 
         handler = new Handler();
         Bundle bundle = getIntent().getExtras();
-        mhandler = bundle.getCharSequence("handler").toString();
+        nickname = bundle.getCharSequence("handler").toString();
         updateData();
 
         lv_account.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,27 +82,23 @@ public class UserActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0)
                 {
-
                     new AlertDialog.Builder(UserActivity.this)
-                            .setTitle("请输入账户")
-                            .setView(editText)
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    SharedPreferences pref = getSharedPreferences("cfPref", MODE_PRIVATE);
-                                    SharedPreferences.Editor edit = pref.edit();
-                                    edit.putString("handler", String.valueOf(editText.getText()));
-                                    edit.commit();
-                                    xhandler = String.valueOf(editText.getText());
-                                    UserActivity.this.updateData();
-                                }
-                            })
-                            .show();
-
+                        .setTitle("请输入账户")
+                        .setView(editText)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferences pref = getSharedPreferences("CodeForcePref", MODE_PRIVATE);
+                                SharedPreferences.Editor edit = pref.edit();
+                                edit.putString("handler", String.valueOf(editText.getText()));
+                                edit.commit();
+                                _handler = String.valueOf(editText.getText());
+                                UserActivity.this.updateData();
+                            }
+                        })
+                        .show();
                 }
             }
         });
     }
-
-
 }

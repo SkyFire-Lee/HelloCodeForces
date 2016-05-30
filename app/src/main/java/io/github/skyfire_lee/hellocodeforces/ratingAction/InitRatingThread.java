@@ -1,9 +1,7 @@
 package io.github.skyfire_lee.hellocodeforces.ratingAction;
 
 import android.graphics.Color;
-import android.os.Handler;
 
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -15,10 +13,8 @@ import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-import io.github.skyfire_lee.hellocodeforces.SuperUtils;
+import io.github.skyfire_lee.hellocodeforces.RatingActivity;
 import io.github.skyfire_lee.hellocodeforces.bean.rankBean;
 
 /**
@@ -26,18 +22,11 @@ import io.github.skyfire_lee.hellocodeforces.bean.rankBean;
  */
 public class InitRatingThread extends Thread {
 
-    private List<rankBean> list;
-    private Handler handler;
-    private rankAdapter RankAdapter;
-    private String mhandler;
-    private LineChart chart;
+    private RatingActivity context;
 
-    public InitRatingThread(List<rankBean> list, Handler handler, rankAdapter rankAdapter, String mhandler, LineChart chart) {
-        this.list = list;
-        this.handler = handler;
-        RankAdapter = rankAdapter;
-        this.mhandler = mhandler;
-        this.chart = chart;
+    public InitRatingThread(RatingActivity context)
+    {
+        this.context = context;
     }
 
     @Override
@@ -46,11 +35,11 @@ public class InitRatingThread extends Thread {
         final JSONArray jsonArray;
 
         try {
-            String doc = Jsoup.connect("http://codeforces.com/api/user.rating?handle="+mhandler).ignoreContentType(true).execute().body();
+            String doc = Jsoup.connect("http://codeforces.com/api/user.rating?handle="+ context.nickname).ignoreContentType(true).execute().body();
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
-            handler.post(new Runnable() {
+            context.handler.post(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -58,14 +47,14 @@ public class InitRatingThread extends Thread {
 
                         for (int i = len - 1; i >= 0; i--)
                         {
-                            list.add(new rankBean((jsonArray.getJSONObject(i).getString("contestName")),(jsonArray.getJSONObject(i).getString("oldRating")), (jsonArray.getJSONObject(i).getString("newRating")),(jsonArray.getJSONObject(i).getString("rank"))));
+                            context.list.add(new rankBean((jsonArray.getJSONObject(i).getString("contestName")),(jsonArray.getJSONObject(i).getString("oldRating")), (jsonArray.getJSONObject(i).getString("newRating")),(jsonArray.getJSONObject(i).getString("rank"))));
                         }
 
-                        RankAdapter.notifyDataSetChanged();
+                        context.RankAdapter.notifyDataSetChanged();
 
-                        chart.setData(getData(list.size()));
+                        context.lc_charts.setData(getData(context.list.size()));
 
-                        chart.animateX(2500);
+                        context.lc_charts.animateX(2500);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -86,8 +75,8 @@ public class InitRatingThread extends Thread {
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
         for (int i = 0, j = count - 1; i < count; i++, j--) {
-            xVals.add(list.get(j).getContestName());
-            yVals.add(new Entry((float)(Integer.parseInt(list.get(j).getNewRating())), i));
+            xVals.add(context.list.get(j).getContestName());
+            yVals.add(new Entry((float)(Integer.parseInt(context.list.get(j).getNewRating())), i));
         }
 
         LineDataSet set1 = new LineDataSet(yVals, "Source");

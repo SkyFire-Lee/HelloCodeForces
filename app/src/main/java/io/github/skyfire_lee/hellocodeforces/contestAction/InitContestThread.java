@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.List;
 
+import io.github.skyfire_lee.hellocodeforces.ContestActivity;
 import io.github.skyfire_lee.hellocodeforces.SuperUtils;
 import io.github.skyfire_lee.hellocodeforces.bean.contestBean;
 import io.github.skyfire_lee.hellocodeforces.bean.rankBean;
@@ -21,14 +22,10 @@ import io.github.skyfire_lee.hellocodeforces.ratingAction.rankAdapter;
  */
 public class InitContestThread extends Thread{
 
-    private List<contestBean> list;
-    private Handler handler;
-    private contestAdapter ContestAdapter;
+    private ContestActivity context;
 
-    public InitContestThread(List<contestBean> list, Handler handler, contestAdapter ContestAdapter) {
-        this.list = list;
-        this.handler = handler;
-        this.ContestAdapter = ContestAdapter;
+    public InitContestThread(ContestActivity context) {
+        this.context = context;
     }
 
     @Override
@@ -41,13 +38,13 @@ public class InitContestThread extends Thread{
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
-            handler.post(new Runnable() {
+            context.handler.post(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         int len = jsonArray.length();
 
-                        for (int i = 0; i < len; i++)
+                        for (int i = 0; i < Math.min(len, 30); i++)
                         {
                             contestBean ContestBean = new contestBean();
 
@@ -57,10 +54,10 @@ public class InitContestThread extends Thread{
 
                             ContestBean.setPhase(jsonArray.getJSONObject(i).getString("phase"));
 
-                            list.add(ContestBean);
+                            context.list.add(ContestBean);
                         }
 
-                        ContestAdapter.notifyDataSetChanged();
+                        context.ContestAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -124,18 +127,16 @@ public class SuperUtils {
         return null;
     }
 
-    public static String getHtmlCss(String data)
-    {
+    public static String getHtmlCss(String data)  {
         data = "<html><head><link rel=\"stylesheet\" href=\"http://st.codeforces.com/s/56354/css/ttypography.css\" type=\"text/css\" charset=\"utf-8\"><style>* {font-size:16px;line-height:20px;} p {color:#333;font-size:0.75em !important;}</style>" + data;
         data = data + "</head><body></body></html>";
         return data;
     }
 
-    private static SimpleDateFormat sf = null;
-
     public static String getDateToString(long time) {
         Date d = new Date(time*1000);
-        sf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         return sf.format(d);
     }
+
 }

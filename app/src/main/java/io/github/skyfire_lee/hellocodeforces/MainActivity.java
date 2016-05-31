@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import io.github.skyfire_lee.hellocodeforces.mainAction.InitMainThread;
 
 
 public class MainActivity extends AppCompatActivity {
-
     public ImageView id_avatar;
     public TextView id_name;
     public TextView id_rating;

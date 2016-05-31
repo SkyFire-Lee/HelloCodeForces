@@ -58,12 +58,12 @@ public class InitUserThread extends Thread {
                 doc = "";
             }
 
-
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
             jsonObject = jsonArray.getJSONObject(0);
 
-            final userInfoBean userInfoBean = new userInfoBean(jsonObject.getString("handle"), jsonObject.getString("rank"), jsonObject.getString("rating"));
+        //    final userInfoBean userInfoBean = new userInfoBean(jsonObject.getString("handle"), jsonObject.getString("rank"), jsonObject.getString("rating"));
+            final userInfoBean userInfoBean = SuperUtils.getUserInfo(mhandler);
 
             handler.post(new Runnable() {
                 @Override

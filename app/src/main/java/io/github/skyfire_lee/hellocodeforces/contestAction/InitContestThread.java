@@ -2,6 +2,7 @@ package io.github.skyfire_lee.hellocodeforces.contestAction;
 
 import android.os.Handler;
 import android.os.SystemClock;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,7 @@ public class InitContestThread extends Thread{
         final JSONArray jsonArray;
 
         try {
-            String doc = Jsoup.connect("http://codeforces.com/api/contest.list?gym=false").ignoreContentType(true).execute().body();
+            String doc = SuperUtils.getHTML("http://codeforces.com/api/contest.list?gym=false");
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
@@ -59,14 +60,14 @@ public class InitContestThread extends Thread{
 
                         context.ContestAdapter.notifyDataSetChanged();
 
+                        context.load.setVisibility(View.GONE);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package io.github.skyfire_lee.hellocodeforces.userAction;
 
 import android.content.Context;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ListView;
 
 import com.android.volley.toolbox.Volley;
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import io.github.skyfire_lee.hellocodeforces.SuperUtils;
+import io.github.skyfire_lee.hellocodeforces.UserActivity;
 import io.github.skyfire_lee.hellocodeforces.bean.itemBean;
 import io.github.skyfire_lee.hellocodeforces.bean.userInfoBean;
 
@@ -24,21 +26,10 @@ import io.github.skyfire_lee.hellocodeforces.bean.userInfoBean;
  * Created by SkyFire on 2016/5/18.
  */
 public class InitUserThread extends Thread {
-    private List<itemBean> account;
-    private List<itemBean> info;
-    private Handler handler;
-    private InfoAdapter accountAdapter;
-    private InfoAdapter infoAdapter;
-    private String mhandler;
-    private Context context;
 
-    public InitUserThread(List<itemBean> account, List<itemBean> info, Handler handler, InfoAdapter accountAdapter, InfoAdapter infoAdapter, String mhandler, Context context) {
-        this.account = account;
-        this.info = info;
-        this.handler = handler;
-        this.accountAdapter = accountAdapter;
-        this.infoAdapter = infoAdapter;
-        this.mhandler = mhandler;
+    private UserActivity context;
+
+    public InitUserThread(UserActivity context) {
         this.context = context;
     }
 
@@ -50,28 +41,22 @@ public class InitUserThread extends Thread {
         final JSONObject jsonObject;
 
         try {
-            String doc = "";
-            try {
-                doc = Jsoup.connect("http://codeforces.com/api/user.info?handles=" + mhandler).ignoreContentType(true).execute().body();
-            }catch (SocketTimeoutException e)
-            {
-                doc = "";
-            }
+            String doc = SuperUtils.getHTML("http://codeforces.com/api/user.info?handles=" + context._handler);
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
             jsonObject = jsonArray.getJSONObject(0);
 
         //    final userInfoBean userInfoBean = new userInfoBean(jsonObject.getString("handle"), jsonObject.getString("rank"), jsonObject.getString("rating"));
-            final userInfoBean userInfoBean = SuperUtils.getUserInfo(mhandler);
+            final userInfoBean userInfoBean = SuperUtils.getUserInfo(context._handler);
 
-            handler.post(new Runnable() {
+            context.handler.post(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        account.add(new itemBean(SuperUtils.getChinese("handle", context), userInfoBean.getHandle()));
-                        account.add(new itemBean(SuperUtils.getChinese("rank", context), userInfoBean.getRank()));
-                        account.add(new itemBean(SuperUtils.getChinese("rating", context), userInfoBean.getRating()));
+                        context.account.add(new itemBean(SuperUtils.getChinese("handle", context), userInfoBean.getHandle()));
+                        context.account.add(new itemBean(SuperUtils.getChinese("rank", context), userInfoBean.getRank()));
+                        context.account.add(new itemBean(SuperUtils.getChinese("rating", context), userInfoBean.getRating()));
 
                         Iterator<?> it = jsonObject.keys();
                         while (it.hasNext()) {
@@ -85,20 +70,18 @@ public class InitUserThread extends Thread {
 
                             String value = jsonObject.getString(key);
 
-                            info.add(new itemBean(SuperUtils.getChinese(key, context), value));
+                            context.info.add(new itemBean(SuperUtils.getChinese(key, context), value));
                         }
 
-                        accountAdapter.notifyDataSetChanged();
-                        infoAdapter.notifyDataSetChanged();
-
+                        context.accountAdapter.notifyDataSetChanged();
+                        context.infoAdapter.notifyDataSetChanged();
+                        context.load.setVisibility(View.GONE);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }

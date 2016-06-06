@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.mingle.widget.LoadingView;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.LogRecord;
@@ -22,6 +24,7 @@ public class BlogActivity extends AppCompatActivity {
     public TextView tv_title;
     public WebView wv_content;
     public Handler handler = new Handler();
+    public LoadingView load;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class BlogActivity extends AppCompatActivity {
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         wv_content = (WebView) findViewById(R.id.wv_content);
+        load = (LoadingView) findViewById(R.id.loadView);
 
         Bundle bundle = getIntent().getExtras();
 

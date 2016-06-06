@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.mingle.widget.LoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class RatingActivity extends AppCompatActivity{
     public String nickname;
     public LineChart lc_charts;
     public List<rankBean> list = new ArrayList<>();
+    public LoadingView load;
 
     public rankAdapter RankAdapter;
     @Override
@@ -33,6 +35,7 @@ public class RatingActivity extends AppCompatActivity{
 
         lv_contest = (ListView) findViewById(R.id.lv_contest);
         lc_charts = (LineChart) findViewById(R.id.lc_charts);
+        load = (LoadingView) findViewById(R.id.loadView);
 
         RankAdapter = new rankAdapter(this, list);
         lv_contest.setAdapter(RankAdapter);

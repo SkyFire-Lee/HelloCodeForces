@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.mingle.widget.LoadingView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class ActionsActivity extends AppCompatActivity {
     public List<blogBean> list = new ArrayList<>();;
     public actionsAdapter actionsAdapter;
     public Handler handler;
+    public LoadingView load;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class ActionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_actions);
 
         lv_blog_list  = (ListView) findViewById(R.id.lv_blog_list);
-
+        load = (LoadingView) findViewById(R.id.loadView);
 
         actionsAdapter = new actionsAdapter(this, list);
         lv_blog_list.setAdapter(actionsAdapter);

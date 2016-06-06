@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.mingle.widget.LoadingView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,35 +25,31 @@ import io.github.skyfire_lee.hellocodeforces.userAction.InitUserThread;
  * Created by SkyFire on 2016/5/18.
  */
 public class UserActivity extends AppCompatActivity {
-    private List<itemBean> account = new ArrayList<>();
-    private List<itemBean> info = new ArrayList<>();
+    public List<itemBean> account = new ArrayList<>();
+    public List<itemBean> info = new ArrayList<>();
 
-    private ListView lv_account;
-    private ListView lv_info;
+    public ListView lv_account;
+    public ListView lv_info;
 
-    private InfoAdapter accountAdapter;
-    private InfoAdapter infoAdapter;
+    public InfoAdapter accountAdapter;
+    public InfoAdapter infoAdapter;
 
-    private String nickname;
-    private String _handler;
-    private Handler handler;
+    public String nickname;
+    public String _handler;
+    public Handler handler;
 
-    private EditText editText;
+    public EditText editText;
+    public LoadingView load;
 
     private void updateData()
     {
-        if(_handler != null && _handler.equals(nickname) == false)
+        if((_handler != null && _handler.equals(nickname) == false) || (_handler == null))
         {
-            nickname = _handler;
+            if(_handler != null)    nickname = _handler;
             account.clear();
             info.clear();
-            (new InitUserThread(account, info, handler,accountAdapter,infoAdapter, nickname, this)).start();
-        }
-        else if(_handler == null)
-        {
-            account.clear();
-            info.clear();
-            (new InitUserThread(account, info, handler,accountAdapter,infoAdapter, nickname, this)).start();
+            load.setVisibility(View.VISIBLE);
+            (new InitUserThread(this)).start();
             _handler = nickname;
         }
     }
@@ -63,9 +61,11 @@ public class UserActivity extends AppCompatActivity {
 
         lv_account = (ListView) findViewById(R.id.lv_account);
         lv_info = (ListView) findViewById(R.id.lv_info);
+        load = (LoadingView) findViewById(R.id.loadView);
 
         accountAdapter = new InfoAdapter(this, account);
         infoAdapter = new InfoAdapter(this, info);
+
 
         lv_account.setAdapter(accountAdapter);
         lv_info.setAdapter(infoAdapter);

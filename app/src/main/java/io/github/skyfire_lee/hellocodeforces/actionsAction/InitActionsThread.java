@@ -1,6 +1,7 @@
 package io.github.skyfire_lee.hellocodeforces.actionsAction;
 
 import android.os.Handler;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +32,7 @@ public class InitActionsThread extends Thread {
         final JSONArray jsonArray;
 
         try {
-            String doc = Jsoup.connect("http://codeforces.com/api/recentActions?maxCount=30").ignoreContentType(true).execute().body();
+            String doc = SuperUtils.getHTML("http://codeforces.com/api/recentActions?maxCount=30");
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
@@ -65,11 +66,11 @@ public class InitActionsThread extends Thread {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    context.load.setVisibility(View.GONE);
                 }
+
             });
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }

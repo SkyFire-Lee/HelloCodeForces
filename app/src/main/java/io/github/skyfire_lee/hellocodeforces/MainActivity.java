@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.mingle.widget.LoadingView;
 
 import io.github.skyfire_lee.hellocodeforces.mainAction.InitMainThread;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public Handler handler;
     public String nickname;
+    public LoadingView load;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         tv_rating = (TextView) findViewById(R.id.tv_s_rating);
         tv_s_contest = (TextView) findViewById(R.id.tv_s_contest);
         tv_s_blog = (TextView) findViewById(R.id.tv_s_blog);
+        load = (LoadingView) findViewById(R.id.loadView);
 
 
         //进入用户界面按钮点击事件
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(nickname == null || _handler.equals(nickname) == false)
         {
+            load.setVisibility(View.VISIBLE);
             (new InitMainThread(this)).start();
         }
     }

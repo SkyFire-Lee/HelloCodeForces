@@ -2,6 +2,7 @@ package io.github.skyfire_lee.hellocodeforces.mainAction;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.view.View;
 
 import io.github.skyfire_lee.hellocodeforces.MainActivity;
 import io.github.skyfire_lee.hellocodeforces.SuperUtils;
@@ -22,6 +23,7 @@ public class InitMainThread extends Thread{
     public void run() {
 
         SharedPreferences pref = context.getSharedPreferences("CodeForcePref", context.MODE_PRIVATE);
+
         final String handler = pref.getString("handler", "tourist");
 
         final Bitmap bitmap = SuperUtils.getAvatarImage(handler);
@@ -35,6 +37,7 @@ public class InitMainThread extends Thread{
                 context.id_avatar.setImageBitmap(bitmap);
                 context.id_name.setText(handler);
                 context.id_rating.setText(userInfo.getRating());
+                context.load.setVisibility(View.GONE);
             }
         });
     }

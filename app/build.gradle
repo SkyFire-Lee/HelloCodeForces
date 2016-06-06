@@ -44,3 +44,13 @@ repositories {
 dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 }
+
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+dependencies {
+    compile 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
+}

@@ -3,6 +3,7 @@ package io.github.skyfire_lee.hellocodeforces.blogAction;
 import android.os.Handler;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class InitBlogThread extends Thread {
         final JSONObject jsonObject;
 
         try {
-            String doc = Jsoup.connect("http://www.codeforces.com/api/blogEntry.view?blogEntryId=" + context.blogEntryId).ignoreContentType(true).execute().body();
+            String doc = SuperUtils.getHTML("http://www.codeforces.com/api/blogEntry.view?blogEntryId=" + context.blogEntryId);
 
             jsonObject = new JSONObject(doc).getJSONObject("result");
 
@@ -51,10 +52,9 @@ public class InitBlogThread extends Thread {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    context.load.setVisibility(View.GONE);
                 }
             });
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }

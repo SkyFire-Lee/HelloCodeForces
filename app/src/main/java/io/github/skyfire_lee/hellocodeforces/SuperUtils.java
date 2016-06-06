@@ -12,8 +12,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -82,7 +84,7 @@ public class SuperUtils {
 
         String doc = null;
         try {
-            doc = Jsoup.connect("http://codeforces.com/api/user.info?handles=" + handler).ignoreContentType(true).execute().body();
+            doc = getHTML("http://codeforces.com/api/user.info?handles=" + handler);
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
@@ -92,9 +94,7 @@ public class SuperUtils {
 
             return bitmap;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -108,7 +108,7 @@ public class SuperUtils {
 
         String doc = null;
         try {
-            doc = Jsoup.connect("http://codeforces.com/api/user.info?handles=" + handler).ignoreContentType(true).execute().body();
+            doc = getHTML("http://codeforces.com/api/user.info?handles=" + handler);
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
@@ -118,8 +118,6 @@ public class SuperUtils {
 
             return userInfoBean;
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -139,4 +137,32 @@ public class SuperUtils {
         return sf.format(d);
     }
 
+    public static String getHTML(String _url)
+    {
+        String html = "";
+        try {
+            URL url = new URL(_url);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            InputStream is = conn.getInputStream();
+
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int len = -1;
+            while ((len = is.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+            os.close();
+            is.close();
+
+            html = os.toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return html;
+    }
 }

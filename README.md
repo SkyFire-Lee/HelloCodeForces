@@ -11,9 +11,13 @@ Codeforce客户端
 - [ ] 题目信息查询
 
 ##更新日志
+![](http://7xpt6y.com1.z0.glb.clouddn.com/Screenshot2.png)
+![](http://7xpt6y.com1.z0.glb.clouddn.com/Screenshot1.png)
+
+
+##更新日志
 - 16年6月7日
     整理代码，消除过度动画
-
 
 ##联系我
   * [邮箱](mailto:739609084@qq.com "给我发邮件")

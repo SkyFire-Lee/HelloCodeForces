@@ -1,4 +1,4 @@
-package io.github.skyfire_lee.hellocodeforces.userAction;
+package io.github.skyfire_lee.hellocodeforces.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,22 +1,13 @@
-package io.github.skyfire_lee.hellocodeforces.contestAction;
-
-import android.os.Handler;
-import android.os.SystemClock;
-import android.view.View;
+package io.github.skyfire_lee.hellocodeforces.init;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
-import java.io.IOException;
-import java.util.List;
-
-import io.github.skyfire_lee.hellocodeforces.ContestActivity;
-import io.github.skyfire_lee.hellocodeforces.SuperUtils;
+import io.github.skyfire_lee.hellocodeforces.ui.ContestActivity;
+import io.github.skyfire_lee.hellocodeforces.util.Network;
 import io.github.skyfire_lee.hellocodeforces.bean.contestBean;
-import io.github.skyfire_lee.hellocodeforces.bean.rankBean;
-import io.github.skyfire_lee.hellocodeforces.ratingAction.rankAdapter;
+import io.github.skyfire_lee.hellocodeforces.util.Time;
 
 /**
  * Created by SkyFire on 2016/5/21.
@@ -35,7 +26,7 @@ public class InitContestThread extends Thread{
         final JSONArray jsonArray;
 
         try {
-            String doc = SuperUtils.getHTML("http://codeforces.com/api/contest.list?gym=false");
+            String doc = Network.getHTML("http://codeforces.com/api/contest.list?gym=false");
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
@@ -51,7 +42,7 @@ public class InitContestThread extends Thread{
 
                             ContestBean.setName(jsonArray.getJSONObject(i).getString("name")).setDurationSeconds(jsonArray.getJSONObject(i).getString("durationSeconds"));
 
-                            ContestBean.setStartTimeSeconds(SuperUtils.getDateToString(Long.parseLong(jsonArray.getJSONObject(i).getString("startTimeSeconds"))));
+                            ContestBean.setStartTimeSeconds(Time.getDateToString(Long.parseLong(jsonArray.getJSONObject(i).getString("startTimeSeconds"))));
 
                             ContestBean.setPhase(jsonArray.getJSONObject(i).getString("phase"));
 
@@ -60,7 +51,6 @@ public class InitContestThread extends Thread{
 
                         context.ContestAdapter.notifyDataSetChanged();
 
-                        context.load.setVisibility(View.GONE);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

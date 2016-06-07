@@ -1,4 +1,4 @@
-package io.github.skyfire_lee.hellocodeforces.ratingAction;
+package io.github.skyfire_lee.hellocodeforces.adapter;
 
 import android.content.Context;
 import android.graphics.Color;

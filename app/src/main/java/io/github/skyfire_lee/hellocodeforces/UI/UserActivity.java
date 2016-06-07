@@ -1,4 +1,4 @@
-package io.github.skyfire_lee.hellocodeforces;
+package io.github.skyfire_lee.hellocodeforces.ui;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -12,14 +12,13 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.mingle.widget.LoadingView;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.skyfire_lee.hellocodeforces.userAction.InfoAdapter;
+import io.github.skyfire_lee.hellocodeforces.R;
+import io.github.skyfire_lee.hellocodeforces.adapter.InfoAdapter;
 import io.github.skyfire_lee.hellocodeforces.bean.itemBean;
-import io.github.skyfire_lee.hellocodeforces.userAction.InitUserThread;
+import io.github.skyfire_lee.hellocodeforces.init.InitUserThread;
 
 /**
  * Created by SkyFire on 2016/5/18.
@@ -28,56 +27,29 @@ public class UserActivity extends AppCompatActivity {
     public List<itemBean> account = new ArrayList<>();
     public List<itemBean> info = new ArrayList<>();
 
-    public ListView lv_account;
-    public ListView lv_info;
+    public ListView accountLV;
+    public ListView infoLV;
 
     public InfoAdapter accountAdapter;
     public InfoAdapter infoAdapter;
 
-    public String nickname;
-    public String _handler;
-    public Handler handler;
+    public String handle;
+    public String _handle;
+
+    public Handler handler = new Handler();
 
     public EditText editText;
-    public LoadingView load;
-
-    private void updateData()
-    {
-        if((_handler != null && _handler.equals(nickname) == false) || (_handler == null))
-        {
-            if(_handler != null)    nickname = _handler;
-            account.clear();
-            info.clear();
-            load.setVisibility(View.VISIBLE);
-            (new InitUserThread(this)).start();
-            _handler = nickname;
-        }
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        lv_account = (ListView) findViewById(R.id.lv_account);
-        lv_info = (ListView) findViewById(R.id.lv_info);
-        load = (LoadingView) findViewById(R.id.loadView);
+        findView();
 
-        accountAdapter = new InfoAdapter(this, account);
-        infoAdapter = new InfoAdapter(this, info);
+        updateData();   //加载更新数据
 
-
-        lv_account.setAdapter(accountAdapter);
-        lv_info.setAdapter(infoAdapter);
-
-        editText = new EditText(UserActivity.this);
-
-        handler = new Handler();
-        Bundle bundle = getIntent().getExtras();
-        nickname = bundle.getCharSequence("handler").toString();
-        updateData();
-
-        lv_account.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        accountLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0)
@@ -92,7 +64,7 @@ public class UserActivity extends AppCompatActivity {
                                 SharedPreferences.Editor edit = pref.edit();
                                 edit.putString("handler", String.valueOf(editText.getText()));
                                 edit.commit();
-                                _handler = String.valueOf(editText.getText());
+                                _handle = String.valueOf(editText.getText());
                                 UserActivity.this.updateData();
                             }
                         })
@@ -100,5 +72,35 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void findView()
+    {
+        accountLV = (ListView) findViewById(R.id.lv_account);
+        infoLV = (ListView) findViewById(R.id.lv_info);
+
+        accountAdapter = new InfoAdapter(this, account);
+        infoAdapter = new InfoAdapter(this, info);
+
+        accountLV.setAdapter(accountAdapter);
+        infoLV.setAdapter(infoAdapter);
+
+        editText = new EditText(UserActivity.this);
+
+        handle = (getIntent().getExtras()).getCharSequence("handle").toString();    //获取数据
+    }
+
+    private void updateData()
+    {
+        if((_handle != null && _handle.equals(handle) == false) || (_handle == null))
+        {
+            if(_handle != null)    handle = _handle;
+
+            account.clear();
+            info.clear();
+
+            (new InitUserThread(this)).start();
+            _handle = handle;
+        }
     }
 }

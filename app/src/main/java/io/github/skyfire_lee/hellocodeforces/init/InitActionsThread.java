@@ -1,19 +1,13 @@
-package io.github.skyfire_lee.hellocodeforces.actionsAction;
-
-import android.os.Handler;
-import android.view.View;
+package io.github.skyfire_lee.hellocodeforces.init;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
-import java.io.IOException;
-import java.util.List;
-
-import io.github.skyfire_lee.hellocodeforces.ActionsActivity;
-import io.github.skyfire_lee.hellocodeforces.SuperUtils;
+import io.github.skyfire_lee.hellocodeforces.ui.ActionsActivity;
+import io.github.skyfire_lee.hellocodeforces.util.Network;
 import io.github.skyfire_lee.hellocodeforces.bean.blogBean;
+import io.github.skyfire_lee.hellocodeforces.util.Time;
 
 /**
  * Created by SkyFire on 2016/5/21.
@@ -32,7 +26,7 @@ public class InitActionsThread extends Thread {
         final JSONArray jsonArray;
 
         try {
-            String doc = SuperUtils.getHTML("http://codeforces.com/api/recentActions?maxCount=30");
+            String doc = Network.getHTML("http://codeforces.com/api/recentActions?maxCount=30");
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
@@ -52,7 +46,7 @@ public class InitActionsThread extends Thread {
 
                             BlogBean.setAuthor(jsonObject.getString("authorHandle"));
 
-                            BlogBean.setCreationTimeSeconds(SuperUtils.getDateToString(Long.parseLong(jsonObject.getString("creationTimeSeconds"))));
+                            BlogBean.setCreationTimeSeconds(Time.getDateToString(Long.parseLong(jsonObject.getString("creationTimeSeconds"))));
 
                             BlogBean.setTitle(jsonObject.getString("title"));
 
@@ -66,7 +60,6 @@ public class InitActionsThread extends Thread {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    context.load.setVisibility(View.GONE);
                 }
 
             });

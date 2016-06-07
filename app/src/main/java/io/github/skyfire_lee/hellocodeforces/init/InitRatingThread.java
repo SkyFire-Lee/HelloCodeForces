@@ -1,7 +1,6 @@
-package io.github.skyfire_lee.hellocodeforces.ratingAction;
+package io.github.skyfire_lee.hellocodeforces.init;
 
 import android.graphics.Color;
-import android.view.View;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -10,13 +9,11 @@ import com.github.mikephil.charting.data.LineDataSet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import io.github.skyfire_lee.hellocodeforces.RatingActivity;
-import io.github.skyfire_lee.hellocodeforces.SuperUtils;
+import io.github.skyfire_lee.hellocodeforces.ui.RatingActivity;
+import io.github.skyfire_lee.hellocodeforces.util.Network;
 import io.github.skyfire_lee.hellocodeforces.bean.rankBean;
 
 /**
@@ -37,7 +34,7 @@ public class InitRatingThread extends Thread {
         final JSONArray jsonArray;
 
         try {
-            String doc = SuperUtils.getHTML("http://codeforces.com/api/user.rating?handle="+ context.nickname);
+            String doc = Network.getHTML("http://codeforces.com/api/user.rating?handle="+ context.handle);
 
             jsonArray = new JSONObject(doc).getJSONArray("result");
 
@@ -54,11 +51,10 @@ public class InitRatingThread extends Thread {
 
                         context.RankAdapter.notifyDataSetChanged();
 
-                        context.lc_charts.setData(getData(context.list.size()));
+                        context.chartsLC.setData(getData(context.list.size()));
 
-                        context.lc_charts.animateX(2500);
+                        context.chartsLC.animateX(2500);
 
-                        context.load.setVisibility(View.GONE);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -1,4 +1,4 @@
-package io.github.skyfire_lee.hellocodeforces.actionsAction;
+package io.github.skyfire_lee.hellocodeforces.adapter;
 
 import android.content.Context;
 import android.text.Html;
